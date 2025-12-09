@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trophy Order Form</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url(./images/7f437ccb-1088-4e58-8084-022cfc2de583.jpg);
+        background-size: cover;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 420px;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        max-height: 95vh;
+        overflow-y: auto;
+    }
+
+    h2 { text-align: center; }
+
+    label {
+        font-weight: bold;
+        margin-top: 15px;
+        display: block;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 12px;
+        width: 100%;
+        background: #0078ff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background: #005fcc;
+    }
+
+    .add-btn {
+        background: #28a745;
+    }
+    .add-btn:hover { background: #1e7e34; }
+
+    .order-block {
+        border: 1px solid #ddd;
+        padding: 12px;
+        border-radius: 10px;
+        background: #fafafa;
+        margin-top: 15px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Trophy Order Form</h2>
+
+    <form id="orderForm">
+
+        <!-- Customer Information -->
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Contact Number:</label>
+        <input type="text" name="contact" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Message(Optional/State your orders here):</label>
+        <input type="text" name="text" required>
+
+
+        <!-- WHERE NEW BLOCKS WILL BE ADDED -->
+        <div id="orderArea"></div>
+
+
+        <!-- ADD BUTTON + DROPDOWN -->
+        <button type="button" class="add-btn" onclick="showAddOptions()">+ Add Order</button>
+
+        <select id="addSelect" style="display:none; margin-top:10px;" onchange="addSelectedBlock()">
+            <option value="">Select an option to add</option>
+            <option value="a">Classic Resins & Fiber Glass</option>
+            <option value="b">Clear Glass Trophies</option>
+            <option value="c">Cup Style Trophies & Fiber Glass</option>
+        </select>
+
+        <button type="submit">Submit Order</button>
+    </form>
+</div>
+
+<!-- EmailJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function() {
+    emailjs.init("Z35Y3VhKxHrJ_YkTW");
+})();
+
+function showAddOptions() {
+    document.getElementById("addSelect").style.display = "block";
+}
+
+function addSelectedBlock() {
+    const choice = document.getElementById("addSelect").value;
+    if (!choice) return;
+
+    const container = document.getElementById("orderArea");
+    let blockHTML = "";
+
+    if (choice === "a") {
+        blockHTML = `
+        <div class="order-block">
+            <label>Type: Classic Resins & Fiber Glass</label>
+            <select name="classic_type[]">
+                <option value="">Select Trophy Type</option>
+                <option>Handheld Pigeon</option>
+                <option>Single Wing</option>
+                <option>Double Wings</option>
+                <option>Honorary Pigeon</option>
+                <option>Fly High-Land</option>
+                <option>Fly High-Quill Feather</option>
+                <option>Fly High-Foundation</option>
+                <option>Fly High-Transparency</option>
+                <option>Fly High-Gold Cup</option>
+                <option>Ultra Mega Fly High-Champ</option>
+                <option>Mega Fly High-Champ</option>
+                <option>Semi Fly High-Land</option>
+                <option>Unite-Life Size Shake Hand</option>
+                <option>Glider</option>
+                <option>Wing Land</option>
+                <option>Pigeon Plate</option>
+                <option>Classic-Bato</option>
+                <option>Classic-Sanga</option>
+                <option>Classic-Mega</option>
+                <option>Mini-pigeon</option>
+                <option>Mini-pigeon on Top</option>
+                <option>Mini-pigeon on Top - Cup Base</option>
+                <option>Semi-pigeon on Top - Cup Base</option>
+                <option>Big-pigeon on Top - Cup Base</option>
+            </select>
+
+            <label>Quantity:</label>
+            <input type="number" name="classic_qty[]" min="0">
+        </div>`;
+    }
+
+    if (choice === "b") {
+        blockHTML = `
+        <div class="order-block">
+            <label>Type: Clear Glass Trophies</label>
+            <select name="glass_type[]">
+                <option value="">Select Trophy Type</option>
+                <option>(M1) Mega-Transparency</option>
+                <option>(M2) Mini Mega-Transparency</option>
+                <option>Fly High-Transparency</option>
+                <option>Tray</option>
+                <option>(MC1) Mini Cup</option>
+                <option>(MC2) Mini Cup</option>
+                <option>(TA1) Type A1 Crown</option>
+                <option>(TA2) Type A2 Crown</option>
+                <option>(TA3) Type A3 Crown</option>
+                <option>(TA4) Type A4 Crown</option>
+                <option>(TB1) Type B1 Crown</option>
+                <option>Type B Crown</option>
+                <option>Type C Crown</option>
+                <option>Bee</option>
+                <option>Longed Round Base</option>
+                <option>Round base</option>
+                <option>Flora</option>
+                <option>Mega Flora</option>
+                <option>(F1) Flora</option>
+                <option>(F2) Flora</option>
+                <option>(PF) Premium Flora</option>
+                <option>Hex</option>
+                <option>(SPK) Spiky Flowers</option>
+                <option>(IC Fly High) Fly High</option>
+                <option>(IC1) Ice Cubes-Mini Fly High</option>
+                <option>(IC2) Ice Cubes-Mini Fly High</option>
+                <option>(V) Vase Style Glass</option>
+                <option>(OG) Oval Glass</option>
+            </select>
+
+            <label>Quantity:</label>
+            <input type="number" name="glass_qty[]" min="0">
+        </div>`;
+    }
+
+    if (choice === "c") {
+        blockHTML = `
+        <div class="order-block">
+            <label>Type: Cup Style Trophies & Fiber Glass</label>
+            <select name="cup_type[]">
+                <option>Mini Pigeon Glass-Cup</option>
+                <option>Mini Pigeon Glass-Foundation Cup</option>
+                <option>Mini Pigeon Glass-Single Foundation Cup</option>
+                <option>Mini Pigeon Glass-Mini Cup</option>
+            </select>
+
+            <label>Quantity:</label>
+            <input type="number" name="cup_qty[]" min="0">
+        </div>`;
+    }
+
+    container.insertAdjacentHTML("beforeend", blockHTML);
+
+    // Reset dropdown visibility + selection
+    document.getElementById("addSelect").selectedIndex = 0;
+    document.getElementById("addSelect").style.display = "none";
+}
+
+
+// Send Form
+document.getElementById("orderForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    emailjs.sendForm("service_fu2bwhh", "template_h3hz7th", this)
+    .then(() => {
+        alert("Your order has been sent successfully!");
+        this.reset();
+        document.getElementById("orderArea").innerHTML = ""; // Clear all added blocks
+    })
+    .catch(error => {
+        alert("Failed to send order. Error: " + JSON.stringify(error));
+    });
+});
+</script>
+
+</body>
+</html>

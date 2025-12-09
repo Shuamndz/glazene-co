@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trophy Order Form</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url(./images/7f437ccb-1088-4e58-8084-022cfc2de583.jpg);
+        background-size: cover;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 420px;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    label {
+        font-weight: bold;
+        margin-top: 15px;
+        display: block;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 12px;
+        width: 100%;
+        background: #0078ff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #005fcc;
+    }
+
+    .add-btn {
+        background: #28a745;
+        margin-top: 10px;
+    }
+
+    .add-btn:hover {
+        background: #1f7e34;
+    }
+
+    .ring-group {
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 10px;
+        background: #fafafa;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Trophy Order Form</h2>
+
+    <form id="orderForm">
+
+        <!-- Customer Info -->
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Contact Number:</label>
+        <input type="text" name="contact" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Message(Optional/State your orders here):</label>
+        <input type="text" name="text" required>
+
+
+        <!-- RING SECTION -->
+        <label>Pigeon Racing Ring:</label>
+
+        <div id="ringContainer">
+            <!-- FIRST RING GROUP -->
+            <div class="ring-group">
+                <select name="ring_type[]">
+                    <option value="">Select Ring Color</option>
+                    <option>Green-White-Black text</option>
+                    <option>Black-Black-Orange text</option>
+                    <option>Blue-Black-White text</option>
+                    <option>Black-Black-White text</option>
+                    <option>Violet-Gradient(White-Purple)-Black text</option>
+                    <option>Blue-White-Black text</option>
+                    <option>Red-Black-White text</option>
+                    <option>Blue-Light Blue-White text</option>
+                    <option>Red-White-Black text</option>
+                    <option>Black-Light Blue-White text</option>
+                    <option>Violet-Black-White text</option>
+                    <option>Green-Gradient(Light green - white)-Black text</option>
+                    <option>Gold-Pink-White text</option>
+                    <option>Red-Gradient(Red - white)-Black text</option>
+                    <option>Gold-White-Black text</option>
+                    <option>Gold-Gold-Black text</option>
+                    <option>Gold-Light Blue-White text</option>
+                    <option>Gold-Gradient(Red-White)-Black text</option>
+                    <option>Green-Black-White text</option>
+                    <option>Gold-Pink-Yellow text</option>
+                    <option>Gold-Gradient(Light green-White)-Black text</option>
+                    <option>Gold-Pink-White text</option>
+                    <option>Black-Red-White text</option>
+                    <option>Violet-Pink-Yellow text</option>
+                    <option>Gold-Gradient(Purple-White)-Black text</option>
+                    <option>Gold-Red-White text</option>
+                    <option>Gold-Light Green-White text</option>
+                    <option>Violet-Pink-White text</option>
+                    <option>Gold-Black-White text</option>
+                    <option>Red-Red-White text</option>
+                    <option>Gold-Gradient(Sky Blue-White)-Black text</option>
+                    <option>Green-Light Green-White text</option>
+                </select>
+
+                <label>Quantity:</label>
+                <input type="number" name="ring_qty[]" min="1">
+            </div>
+        </div>
+
+        <button type="button" class="add-btn" onclick="addRing()">+ Add more order</button>
+
+        <button type="submit">Submit Order</button>
+    </form>
+</div>
+
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function() {
+    emailjs.init("Z35Y3VhKxHrJ_YkTW");
+})();
+
+function addRing() {
+    const container = document.getElementById("ringContainer");
+    const newGroup = container.firstElementChild.cloneNode(true);
+
+    // Clear selected values
+    newGroup.querySelector("select").value = "";
+    newGroup.querySelector("input").value = "";
+
+    container.appendChild(newGroup);
+}
+
+// Send form
+document.getElementById("orderForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    emailjs.sendForm("service_fu2bwhh", "template_h3hz7th", this)
+    .then(() => {
+        alert("Your order has been sent successfully!");
+        this.reset();
+    })
+    .catch(error => {
+        alert("Failed to send order: " + JSON.stringify(error));
+    });
+});
+</script>
+
+</body>
+</html>
